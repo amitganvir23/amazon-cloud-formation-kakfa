@@ -276,32 +276,28 @@ def generateServer(group, rallyAutoScalingGroup):
         "echo 'Running startup script...'\n",
         "echo 'Install aws-cli...'\n"
         "apt-get install -y awscli ansible \n"
-        #"apt-get install -y aws-cli \n"
         "adminUsername=", { "Ref": "Username" }, "\n",
         "adminPassword=", { "Ref": "Password" }, "\n",
         "services=" + servicesParameter + "\n",
         "stackName=", { "Ref": "AWS::StackName" }, "\n",
-        "wget https://raw.githubusercontent.com/shamsk22/amazon-cloud-formation-couchbase/master/scripts/cloudwatch-alarms.sh\n",
-        "wget https://raw.githubusercontent.com/amitganvir23/aws-route53-update/master/UpdateRoute53-yml.sh\n",
-        "wget https://raw.githubusercontent.com/amitganvir23/aws-route53-update/master/kafka-script/server.sh\n",
-        "wget https://raw.githubusercontent.com/amitganvir23/aws-route53-update/master/kafka-script/setup-zookeepr.yml\n",
-        "wget https://raw.githubusercontent.com/amitganvir23/aws-route53-update/master/kafka-script/setup-kafka.yml\n",
+        "wget https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts/UpdateRoute53-yml.sh\n",
+        "wget https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts/cloudwatch-alarms.sh\n",
+        "wget https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts/server.sh\n",
+        "wget https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts/setup-zookeepr.yml\n",
+        "wget https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts/setup-kafka.yml\n",
         "region=", { "Ref": "AWS::Region" }, "\n",
         "vpc_id=", { "Ref": "VpcId" }, "\n",
         "zone_name=glp-test3.com\n",
         "rec_name=kafka.${zone_name}\n",
-        #"ec2_tag_key=Name\n",
         "ec2_tag_key=StackService\n",
-        #"ec2_tag_value=${stackName}-Server\n",
         "ec2_tag_zookeerp_value=${stackName}-zookeeper\n",
         "chmod +x *.sh\n"
     ]
     if groupName==rallyAutoScalingGroup:
-        #command.append("./server.sh ${adminUsername} ${adminPassword} ${services} ${stackName}\n")
+       ### Kafaka
         command.append("./server.sh ${region} ${adminUsername} ${adminPassword} ${services} ${stackName}\n")
         command.append("./UpdateRoute53-yml.sh ${stackName} ${region} ${zone_name} ${rec_name} ${ec2_tag_key} ${ec2_tag_value} ${vpc_id} > route53.log 2>&1\n")
-        #command.append("ansible-playbook setup-kafka.yml -vvv > kafka.log 2>&1\n")
-        command.append("ansible-playbook -e \"REGION=${region} ec2_tag_key=${ec2_tag_key} ec2_tag_value=${stackName}-${services} ec2_tag_zookeerp_value=${stackName}-zookeeper\" setup-kafka.yml -vvv > kafka.log 2>&1\n")
+        command.append("ansible-playbook -e \"REGION=${region} ec2_tag_key=${ec2_tag_key} ec2_tag_value=${stackName}-${services} ec2_tag_zookeerp_value=${ec2_tag_zookeerp_value}\" setup-kafka.yml -vvv > kafka.log 2>&1\n")
 	
     else:
        ### Zookeeper
@@ -310,7 +306,6 @@ def generateServer(group, rallyAutoScalingGroup):
         command.append("\n")
         command.append("./server.sh ${region} ${adminUsername} ${adminPassword} ${services} ${stackName} ${rallyAutoScalingGroup}\n")
         command.append("ansible-playbook -e \"REGION=${region} ec2_tag_key=${ec2_tag_key} ec2_tag_value=${stackName}-${services}\" setup-zookeepr.yml -vvv > zookeeper.log 2>&1\n")
-        #command.append("ansible-playbook setup-zookeepr.yml -vvv > zookeeper.log 2>&1\n")
 
     resources = {
         groupName + "AutoScalingGroup": {

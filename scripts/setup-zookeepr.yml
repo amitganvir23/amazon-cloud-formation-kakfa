@@ -14,10 +14,8 @@
 ##  JAVA
 # --------------------------------------
       - java_home: /usr/local/java/jdk
-      #- jdk_archive_url: http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz
       - jdk_archive_url: http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.tar.gz
       - jdk_archive_filename: jdk-8u171-linux-x64.tar.gz
-      #- jdk_version: jdk1.8.0_101
       - jdk_version: jdk1.8.0_171
 # --------------------------------------
 ## Common -  Common Location information.
@@ -39,7 +37,7 @@
       - data_store: /mnt/data/zookeeper
       - logging: /mnt/data/zookeeper_logging
       - url: https://www.apache.org/dist/zookeeper/zookeeper-{{ version }}/zookeeper-{{ version }}.tar.gz
-      - log4j_properties_url: https://raw.githubusercontent.com/amitganvir23/aws-route53-update/master/kafka-script/zookeeper-templates/log4j.properties
+      - log4j_properties_url: https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/zookeeper-templates/log4j.properties
 
   tasks:
    - name: Create a User `"{{ user }}"` for all our Hadoop Modules.
