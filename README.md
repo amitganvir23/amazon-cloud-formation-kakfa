@@ -1,9 +1,25 @@
 # amazon-cloud-formation-couchbase
 
-These are Amazon CloudFormation Templates (CFT) that install Couchbase Enterprise.  [simple](simple) is probably the best starting point.  [generator](generator) is a template generator for advanced configurations, including MDS.
+[generator](generator) is a template generator for advanced configurations for Kafka. For now this code can work with Ubuntu AMI.
 
-[marketplace](marketplace) is the template used in the [Couchbase AWS Marketplace offer](https://aws.amazon.com/marketplace/seller-profile?id=1a064a14-5ac2-4980-9167-15746aabde72) and probably best deployed directly from Marketplace.
+# Update your information before execute generator.py
+  Like examples:
+    1) The NEW AMI
+    2) The command which need to apppend "command.append"
+    3) To update your zone name and Record name to update on AWS Route53.
+         "zone_name=glp-test3.com"
+        "rec_name=kafka.${zone_name}"
+    4) scripts/server.sh: This script will upate EC2-Tag name
+    5) scripts/UpdateRoute53-yml.sh: This script will upate Route53
+    5) scripts/setup-kafka.yml: This script will configure kafak
+    6) scripts/setup-zookeepr.yml: This script will configure zookeeper for kafak
+    
 
-Documentation that covers deploying from Marketplace as well as some best practices is available [here](https://developer.couchbase.com/documentation/server/5.0/cloud/couchbase-aws.html).
+# How to executed generator.py
+ 1) cd generator/
+ 2) ./deploy.sh <StackName>  (Specify your StackName, ex. ./deploy.sh glp-kafka-test)
+ 3) ls -l generated.template (Here it will genrate template file to upload in Cloud Formation)
 
-More information on the Couchbase and Amazon partnership is available [here](https://www.couchbase.com/partners/amazon).
+
+
+
