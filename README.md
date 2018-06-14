@@ -2,11 +2,11 @@
 
 [generator](generator) is a template generator for advanced configurations for Kafka. For now this code can work with Ubuntu AMI.
 
-# Update your information before execute generator.py
+## Update your information before execute generator.py
   Like examples:
-    - 1) The NEW AMI
-    - 2) The command which need to apppend "command.append"
-    3) To update your zone name and Record name to update on AWS Route53.
+    #1) The NEW AMI
+    #2) The command which need to apppend "command.append"
+    #3) To update your zone name and Record name to update on AWS Route53.
          "zone_name=glp-test3.com"
         "rec_name=kafka.${zone_name}"
     4) scripts/server.sh: This script will upate EC2-Tag name
