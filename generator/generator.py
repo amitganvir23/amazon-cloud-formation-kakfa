@@ -277,7 +277,7 @@ def generateServer(group, rallyAutoScalingGroup):
         command.append("rallyAutoScalingGroup=")
         command.append({ "Ref": rallyAutoScalingGroup + "AutoScalingGroup" })
         command.append("\n")
-        command.append("./setup.sh ${region} ${adminUsername} ${adminPassword} ${services} ${stackName} ${rallyAutoScalingGroup}\n")
+        command.append("./setup.sh ${region} ${services} ${stackName} ${rallyAutoScalingGroup}\n")
         command.append("ansible-playbook -e \"REGION=${region} ec2_tag_key=${ec2_tag_key} ec2_tag_value=${stackName}-${services}\" setup-zookeepr.yml -vvv > zookeeper.log 2>&1\n")
 
     resources = {

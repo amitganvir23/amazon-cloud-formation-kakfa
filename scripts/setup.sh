@@ -5,6 +5,7 @@ echo "Running server.sh"
 region=$1
 services=$2
 stackName=$3
+zookeeper_group=$4
 
 apt-get -y update
 apt-get -y install jq
@@ -19,12 +20,12 @@ pip install boto
 
 pip install ansible --upgrade
 
-if [ -z "$6" ]
+if [ -z "$zookeeper_group" ]
 then
   echo "This node is part of the autoscaling group that contains the rally point."
   rallyPrivateDNS=`getrallyPrivateDNS`
 else
-  rallyAutoScalingGroup=$6
+  rallyAutoScalingGroup=$zookeeper_group
   echo "This node is not the rally point and not part of the autoscaling group that contains the rally point."
   echo rallyAutoScalingGroup \'$rallyAutoScalingGroup\'
   rallyPrivateDNS=`getrallyPrivateDNS ${rallyAutoScalingGroup}`
@@ -46,7 +47,7 @@ echo region \'$region\'
 echo instanceID \'$instanceID\'
 echo nodePrivateDNS \'$nodePrivateDNS\'
 
-if [ -z "$6" ]
+if [ -z "$zookeeper_group" ]
 then
     aws ec2 create-tags \
     --region ${region} \
