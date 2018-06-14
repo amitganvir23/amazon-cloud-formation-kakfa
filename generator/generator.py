@@ -263,6 +263,7 @@ def generateServer(group, rallyAutoScalingGroup):
         "zone_name=glp-test3.com\n",
         "rec_name=kafka.${zone_name}\n",
         "ec2_tag_key=StackService\n",
+        "ec2_tag_value=${stackName}-Server\n",
         "ec2_tag_zookeerp_value=${stackName}-zookeeper\n",
         "chmod +x *.sh\n"
     ]
