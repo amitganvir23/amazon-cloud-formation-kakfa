@@ -4,8 +4,8 @@
 
 # Update your information before execute generator.py
   Like examples:
-    1) The NEW AMI
-    2) The command which need to apppend "command.append"
+    - 1) The NEW AMI
+    - 2) The command which need to apppend "command.append"
     3) To update your zone name and Record name to update on AWS Route53.
          "zone_name=glp-test3.com"
         "rec_name=kafka.${zone_name}"
