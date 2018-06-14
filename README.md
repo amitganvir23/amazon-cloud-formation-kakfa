@@ -16,8 +16,8 @@
 
 # How to executed generator.py
  1) cd generator/
- 2) ./deploy.sh <StackName>  (Specify your StackName, ex. ./deploy.sh glp-kafka-test)
- 3) ls -l generated.template (Here it will genrate template file to upload in Cloud Formation)
+ 2) ./deploy.sh '<StackName>'   (Specify your StackName, ex. ./deploy.sh glp-kafka-test)
+ 3) ls -l generated.template    (Here it will genrate template file to upload in Cloud Formation)
 
 
 
