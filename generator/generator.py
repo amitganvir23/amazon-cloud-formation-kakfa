@@ -252,11 +252,12 @@ def generateServer(group, rallyAutoScalingGroup):
         "apt-get install -y awscli ansible \n"
         "services=" + servicesParameter + "\n",
         "stackName=", { "Ref": "AWS::StackName" }, "\n",
-        "wget https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts/UpdateRoute53-yml.sh\n",
-        "wget https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts/cloudwatch-alarms.sh\n",
-        "wget https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts/setup.sh\n",
-        "wget https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts/setup-zookeepr.yml\n",
-        "wget https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts/setup-kafka.yml\n",
+        "baseURL=https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts\n",
+        "wget ${baseURL}/setup.sh\n",
+        "wget ${baseURL}/UpdateRoute53-yml.sh\n",
+        "wget ${baseURL}/cloudwatch-alarms.sh\n",
+        "wget ${baseURL}/setup-zookeepr.yml\n",
+        "wget ${baseURL}/setup-kafka.yml\n",
         "region=", { "Ref": "AWS::Region" }, "\n",
         "vpc_id=", { "Ref": "VpcId" }, "\n",
         "zone_name=glp-test3.com\n",
@@ -267,7 +268,7 @@ def generateServer(group, rallyAutoScalingGroup):
     ]
     if groupName==rallyAutoScalingGroup:
        ### Kafaka
-        command.append("./setup.sh ${region} ${adminUsername} ${adminPassword} ${services} ${stackName}\n")
+        command.append("./setup.sh ${region} ${services} ${stackName}\n")
         command.append("./UpdateRoute53-yml.sh ${stackName} ${region} ${zone_name} ${rec_name} ${ec2_tag_key} ${ec2_tag_value} ${vpc_id} > route53.log 2>&1\n")
         command.append("ansible-playbook -e \"REGION=${region} ec2_tag_key=${ec2_tag_key} ec2_tag_value=${stackName}-${services} ec2_tag_zookeerp_value=${ec2_tag_zookeerp_value}\" setup-kafka.yml -vvv > kafka.log 2>&1\n")
 	

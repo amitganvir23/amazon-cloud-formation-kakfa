@@ -3,10 +3,8 @@
 echo "Running server.sh"
 
 region=$1
-adminUsername=$2
-adminPassword=$3
-services=$4
-stackName=$5
+services=$2
+stackName=$3
 
 apt-get -y update
 apt-get -y install jq
@@ -41,8 +39,6 @@ nodePrivateDNS=`curl http://169.254.169.254/latest/meta-data/hostname`
 
 ## Infor
 echo "Using the settings:"
-echo adminUsername \'$adminUsername\'
-echo adminPassword \'$adminPassword\'
 echo services \'$services\'
 echo stackName \'$stackName\'
 echo rallyPrivateDNS \'$rallyPrivateDNS\'
