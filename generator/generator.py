@@ -13,15 +13,6 @@ def main():
         "AWSTemplateFormatVersion": "2010-09-09",
         "Description": "AWS Deployment for Kafka Enterprise",
         "Parameters": {
-            "Username": {
-                "Description": "Username for Kafka administrator",
-                "Type": "String"
-            },
-            "Password": {
-                "Description": "Password for Kafka administrator",
-                "Type": "String",
-                "NoEcho": True
-            },
             "KeyName": {
                 "Description": "Name of an existing EC2 KeyPair",
                 "Type": "AWS::EC2::KeyPair::KeyName"
@@ -67,23 +58,6 @@ def main():
 def generateMappings(serverVersion):
     allMappings = {
         "KafkaServer": {
-            "4.6.3": {
-                "us-east-1": { "BYOL": "ami-a693a3dc", "HourlyPricing": "ami-ef95a595" },
-                "us-east-2": { "BYOL": "ami-d97441bc", "HourlyPricing": "ami-62764307" },
-                "us-west-1": { "BYOL": "ami-cf8c81af", "HourlyPricing": "ami-c08c81a0" },
-                "us-west-2": { "BYOL": "ami-380dfa40", "HourlyPricing": "ami-49a11e31" },
-                "ca-central-1": { "BYOL": "ami-9822a7fc", "HourlyPricing": "ami-2e22a74a" },
-                "eu-central-1": { "BYOL": "ami-8438a1eb", "HourlyPricing": "ami-9939a0f6" },
-                "eu-west-1": { "BYOL": "ami-078aed7e", "HourlyPricing": "ami-7797f00e" },
-                "eu-west-2": { "BYOL": "ami-dd455fb9", "HourlyPricing": "ami-be7b61da" },
-                "eu-west-3": { "BYOL": "ami-d5dd6ba8", "HourlyPricing": "ami-5bc77126" },
-                "ap-southeast-1": { "BYOL": "ami-33ec944f", "HourlyPricing": "ami-13eb936f" },
-                "ap-southeast-2": { "BYOL": "ami-8910eeeb", "HourlyPricing": "ami-ec11ef8e" },
-                "ap-south-1": { "BYOL": "aami-0d8ddc62", "HourlyPricing": "ami-5db1e032" },
-                "ap-northeast-1": { "BYOL": "ami-b0e489d6", "HourlyPricing": "ami-47e48921" },
-                "ap-northeast-2": { "BYOL": "ami-ec8d2e82", "HourlyPricing": "ami-e78c2f89" },
-                "sa-east-1": { "BYOL": "ami-995519f5", "HourlyPricing": "ami-f5551999" }
-            },
             "5.0.1": {
                 "us-east-1": { "BYOL": "ami-a693a3dc", "HourlyPricing": "ami-ef95a595" },
                 "us-east-2": { "BYOL": "ami-d97441bc", "HourlyPricing": "ami-62764307" },
@@ -276,8 +250,6 @@ def generateServer(group, rallyAutoScalingGroup):
         "echo 'Running startup script...'\n",
         "echo 'Install aws-cli...'\n"
         "apt-get install -y awscli ansible \n"
-        "adminUsername=", { "Ref": "Username" }, "\n",
-        "adminPassword=", { "Ref": "Password" }, "\n",
         "services=" + servicesParameter + "\n",
         "stackName=", { "Ref": "AWS::StackName" }, "\n",
         "wget https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts/UpdateRoute53-yml.sh\n",
