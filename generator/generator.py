@@ -263,7 +263,7 @@ def generateServer(group, rallyAutoScalingGroup):
         "zone_name=glp-test3.com\n",
         "rec_name=kafka.${zone_name}\n",
         "ec2_tag_key=StackService\n",
-        "ec2_tag_value=${stackName}-Server\n",
+        "ec2_tag_value=${stackName}-${services}\n",
         "ec2_tag_zookeerp_value=${stackName}-zookeeper\n",
         "chmod +x *.sh\n"
     ]
@@ -271,7 +271,7 @@ def generateServer(group, rallyAutoScalingGroup):
        ### Kafaka
         command.append("./setup.sh ${region} ${services} ${stackName}\n")
         command.append("./UpdateRoute53-yml.sh ${stackName} ${region} ${zone_name} ${rec_name} ${ec2_tag_key} ${ec2_tag_value} ${vpc_id} > route53.log 2>&1\n")
-        command.append("ansible-playbook -e \"REGION=${region} ec2_tag_key=${ec2_tag_key} ec2_tag_value=${stackName}-${services} ec2_tag_zookeerp_value=${ec2_tag_zookeerp_value}\" setup-kafka.yml -vvv > kafka.log 2>&1\n")
+        command.append("ansible-playbook -e \"REGION=${region} ec2_tag_key=${ec2_tag_key} ec2_tag_value=${ec2_tag_value} ec2_tag_zookeerp_value=${ec2_tag_zookeerp_value}\" setup-kafka.yml -vvv > kafka.log 2>&1\n")
 	
     else:
        ### Zookeeper
@@ -279,7 +279,7 @@ def generateServer(group, rallyAutoScalingGroup):
         command.append({ "Ref": rallyAutoScalingGroup + "AutoScalingGroup" })
         command.append("\n")
         command.append("./setup.sh ${region} ${services} ${stackName} ${rallyAutoScalingGroup}\n")
-        command.append("ansible-playbook -e \"REGION=${region} ec2_tag_key=${ec2_tag_key} ec2_tag_value=${stackName}-${services}\" setup-zookeepr.yml -vvv > zookeeper.log 2>&1\n")
+        command.append("ansible-playbook -e \"REGION=${region} ec2_tag_key=${ec2_tag_key} ec2_tag_value=${ec2_tag_value}\" setup-zookeepr.yml -vvv > zookeeper.log 2>&1\n")
 
     resources = {
         groupName + "AutoScalingGroup": {
