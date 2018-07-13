@@ -40,6 +40,9 @@
       - log4j_properties_url: https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/zookeeper-templates/log4j.properties
 
   tasks:
+   - name: sleep for 300 seconds and continue with play
+     wait_for: timeout=300
+   
    - name: Create a User `"{{ user }}"` for all our Hadoop Modules.
      user: name={{ user }} password={{ password }}
 
