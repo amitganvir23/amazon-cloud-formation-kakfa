@@ -17,6 +17,7 @@ export PATH=~/.local/bin:$PATH
 python get-pip.py --user
 pip install awscli --upgrade --user
 pip install boto
+pip install boto3
 
 pip install ansible --upgrade
 
