@@ -1,0 +1,16 @@
+serverVersion: 5.0.1
+cluster:
+  - group: kafka
+    nodeCount: 1
+    nodeType: t2.xlarge
+    #nodeType: t2.micro
+    dataDiskSize: 8
+    services:
+      - kafka
+  - group: zookeeper
+    nodeCount: 2
+    nodeType: t2.xlarge
+    #nodeType: t2.micro
+    dataDiskSize: 8
+    services:
+      - zookeeper
