@@ -169,11 +169,28 @@
      register: private_ips_zookeeper
 
 ## Collecting zookeeperIP and merger it with port
-   - shell: "echo {{private_ips_zookeeper.stdout_lines}}|tr -d '[ ]' | tr -d '\"'|tr -d '[:alpha:]' | tr ',' '\\n'|sed '/:[0-9]*$/ ! s/$/:{{zookeeper_port}}/' | tr '\\n' ', ' | sed 's|,|, |g' | sed 's/,\ $//'"
+   - shell: "echo {{private_ips_zookeeper.stdout_lines}}|tr -d '[ ]' | tr -d '\"'|tr -d '[:alpha:]' | tr ',' '\\n'|sed '/:[0-9]*$/ ! s/$/:{{zookeeper_port}}/' | tr '\\n' ', ' | sed 's|,|,|g' | sed 's/,\ $//'"
      register: zookeeper_ip_combine
 
 ## Broekr_ID, collecting counting numbers of kafka nodes
-   - shell: "echo {{ private_ips.stdout_lines }}|tr -d '[ ]'|tr -d '\"'|tr -d '[:alpha:]'|tr ',' '\n'|wc -l"
+#   - shell: "echo {{ private_ips.stdout_lines }}|tr -d '[ ]'|tr -d '\"'|tr -d '[:alpha:]'|tr ',' '\n'|wc -l"
+#     register: kafka_broker_id
+
+   - name: Removing previous temprory file if it is there
+     file: path=/tmp/BrokeID state=absent
+
+   - name: Create temprory brokeid collection file
+     file: path=/tmp/BrokeID state=touch
+
+   - name: Collecting kafka brokerid in a file
+     lineinfile:
+       path: "/tmp/BrokeID"
+       line: "{{ item.0}}={{ item.1 }}:{{port}}"
+     with_indexed_items:
+       - "{{ private_ips.stdout_lines }}"
+
+   - name: Checking brokerID number
+     shell: "myip=$(curl http://169.254.169.254/latest/meta-data/local-ipv4); grep $myip /tmp/BrokeID |cut -d '=' -f 1"
      register: kafka_broker_id
 
    - name: "Initializing brokerid File for Zookeeper {{ inventory_hostname }}"
@@ -195,14 +212,12 @@
 
 # Starting Kafka server in port 9091
    - name: Create Kafka server script to start in port {{ port }}
-     lineinfile:
-       dest: "{{ soft_link_base_path }}/kafka/config/kafka_server_starter.sh"
-       line: "#!/bin/sh\necho -e \"Starting {{ port }} Server\"\nnohup sh {{ soft_link_base_path }}/kafka/bin/kafka-server-start.sh {{ soft_link_base_path }}/kafka/config/server.properties &"
-       owner: "{{ user }}"
-       group: "{{ group }}"
-       mode: 0744
-       state: present
-       create: yes
+     copy:
+      content: "#!/bin/sh\necho -e \"Starting {{ port }} Server\"\nnohup sh {{ soft_link_base_path }}/kafka/bin/kafka-server-start.sh {{ soft_link_base_path }}/kafka/config/server.properties &"
+      dest: "{{ soft_link_base_path }}/kafka/config/kafka_server_starter.sh"
+      owner: "{{ user }}"
+      group: "{{ group }}"
+      mode: 0744
 
    - name: Creating data directory for kafka logs
      file: path={{ data_store }} state=directory owner={{ user }} group={{ group }}
