@@ -14,9 +14,13 @@
 ##  JAVA
 # --------------------------------------
       - java_home: /usr/local/java/jdk
-      - jdk_archive_url: http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.tar.gz
-      - jdk_archive_filename: jdk-8u171-linux-x64.tar.gz
-      - jdk_version: jdk1.8.0_171
+      #- jdk_archive_url: http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.tar.gz
+      #- jdk_archive_filename: jdk-8u171-linux-x64.tar.gz
+      - jdk_archive_url: http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.tar.gz
+      - jdk_archive_filename: jdk-8u181-linux-x64.tar.gz
+      - jdk_version: jdk1.8.0_181
+      #- jdk_version: jdk1.8.0_171
+
 # --------------------------------------
 ## Common -  Common Location information.
 # --------------------------------------
@@ -40,8 +44,8 @@
       - log4j_properties_url: https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/zookeeper-templates/log4j.properties
 
   tasks:
-   - name: sleep for 300 seconds and continue with play
-     wait_for: timeout=300
+   - name: sleep for 180 seconds and continue with play
+     wait_for: timeout=180
    
    - name: Create a User `"{{ user }}"` for all our Hadoop Modules.
      user: name={{ user }} password={{ password }}
