@@ -51,8 +51,8 @@
 #--------------------------------------
 ## Creating User for kafka
 #--------------------------------------
-   - name: sleep for 300 seconds and continue with play
-     wait_for: timeout=300
+   - name: sleep for 180 seconds and continue with play
+     wait_for: timeout=180
   
    - name: Create a User `"{{ user }}"` for all our Hadoop Modules.
      user: name={{ user }} password={{ password }}
