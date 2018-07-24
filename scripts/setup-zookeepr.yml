@@ -175,16 +175,25 @@
        - "{{ data_store }}"
        - "{{ logging }}"
 
-##Zid - sotring Public/Ip
+##Zid - sotring Server ID in a file
 #-----------------------------
 
    - name: Create `myid` file
      file: path={{ data_store }}/myid state=touch mode=644  owner={{ user }} group={{ group }}
 
-   - name: "Initializing `myid` File for Zookeeper"
-     lineinfile: dest={{ data_store }}/myid line={{ item.1 }}
-     with_indexed_items:
-       - "{{ private_ips.stdout_lines }}"
+#   - name: "Initializing `myid` File for Zookeeper"
+#     lineinfile: dest={{ data_store }}/myid line={{ item.1 }}
+#     with_indexed_items:
+#       - "{{ private_ips.stdout_lines }}"
+
+   - name: Checking `myid` number
+     shell: "myip=$(curl http://169.254.169.254/latest/meta-data/local-ipv4); grep $myip /opt/zookeeper/conf/zoo.cfg |grep server|cut -d '=' -f 1|cut -d '.' -f 2"
+     register: MYID
+
+   - name: Initializing `myid` File for Zookeeper
+     copy:
+      content: '{{ MYID.stdout }}'
+      dest: '{{ data_store }}/myid'
 
 # Starting Zookeeper Service.
    - name: Starting Zookeeper Server.
