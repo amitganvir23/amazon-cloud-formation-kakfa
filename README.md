@@ -29,7 +29,7 @@
       - License: BYOL
       - Subnets: [Select Subnet]
       - VpcId: [Select VPC]
-     #Example:
+     ## Example:
       - Stack name: glp-kafka-test
       - CidrIpVPC: 172.168.0.0/16
       - KeyName: terraform-support-keys
