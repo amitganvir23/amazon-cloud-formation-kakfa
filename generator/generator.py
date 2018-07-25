@@ -222,7 +222,7 @@ def generateSyncGateway(group, rallyAutoScalingGroup):
                             "echo 'Running startup script...'\n",
                             "stackName=", { "Ref": "AWS::StackName" }, "\n",
                             "baseURL=https://raw.githubusercontent.com/couchbase-partners/amazon-cloud-formation-couchbase/master/scripts/\n",
-                            "wget ${baseURL}syncGateway.sh\n",
+                            "wget -N ${baseURL}syncGateway.sh\n",
                             "chmod +x *.sh\n"
                             # "./syncGateway.sh ${stackName}\n"
                         ]]
@@ -253,11 +253,11 @@ def generateServer(group, rallyAutoScalingGroup):
         "services=" + servicesParameter + "\n",
         "stackName=", { "Ref": "AWS::StackName" }, "\n",
         "baseURL=https://raw.githubusercontent.com/amitganvir23/amazon-cloud-formation-kakfa/master/scripts\n",
-        "wget ${baseURL}/setup.sh\n",
-        "wget ${baseURL}/UpdateRoute53-yml.sh\n",
-        "wget ${baseURL}/cloudwatch-alarms.sh\n",
-        "wget ${baseURL}/setup-zookeepr.yml\n",
-        "wget ${baseURL}/setup-kafka.yml\n",
+        "wget -N ${baseURL}/setup.sh\n",
+        "wget -N ${baseURL}/UpdateRoute53-yml.sh\n",
+        "wget -N ${baseURL}/cloudwatch-alarms.sh\n",
+        "wget -N ${baseURL}/setup-zookeepr.yml\n",
+        "wget -N ${baseURL}/setup-kafka.yml\n",
         "region=", { "Ref": "AWS::Region" }, "\n",
         "vpc_id=", { "Ref": "VpcId" }, "\n",
         "zone_name=glp-test3.com\n",
