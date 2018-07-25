@@ -53,10 +53,10 @@ then
     aws ec2 create-tags \
     --region ${region} \
     --resources ${instanceID} \
-    --tags Key=Name,Value=${stackName}-Server Key=Role,Value=${services} Key=StackService,Value=${stackName}-${services}
+    --tags Key=Name,Value=${stackName}-kafka Key=Role,Value=${services} Key=StackService,Value=${stackName}-${services}
 else
     aws ec2 create-tags \
     --region ${region} \
     --resources ${instanceID} \
-    --tags Key=Name,Value=${stackName}-Server-Rally Key=Role,Value=${services} Key=StackService,Value=${stackName}-${services}
+    --tags Key=Name,Value=${stackName}-kafka-zookeeper Key=Role,Value=${services} Key=StackService,Value=${stackName}-${services}
 fi

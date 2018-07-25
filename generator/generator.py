@@ -58,9 +58,9 @@ def main():
 def generateMappings(serverVersion):
     allMappings = {
         "KafkaServer": {
-            "5.0.1": {
+            "amazon_ami": {
                 "us-east-1": { "BYOL": "ami-a693a3dc", "HourlyPricing": "ami-ef95a595" },
-                "us-east-2": { "BYOL": "ami-d97441bc", "HourlyPricing": "ami-62764307" },
+                "us-east-2": { "BYOL": "ami-5e8bb23b", "HourlyPricing": "ami-62764307" },
                 "us-west-1": { "BYOL": "ami-cf8c81af", "HourlyPricing": "ami-c08c81a0" },
                 "us-west-2": { "BYOL": "ami-269c235e", "HourlyPricing": "ami-49a11e31" },
                 "ca-central-1": { "BYOL": "ami-9822a7fc", "HourlyPricing": "ami-2e22a74a" },
@@ -76,7 +76,7 @@ def generateMappings(serverVersion):
                 "sa-east-1": { "BYOL": "ami-995519f5", "HourlyPricing": "ami-f5551999" }
             }
         },
-        "KafkaSyncGateway": {
+        "custom_ami": {
             "1.5.1": {
                 "us-east-1": { "BYOL": "ami-8294a4f8", "HourlyPricing": "ami-6d93a317" },
                 "us-east-2": { "BYOL": "ami-0877426d", "HourlyPricing": "ami-0f75406a" },
@@ -157,7 +157,9 @@ def generateMiscResources():
                     { "IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "CidrIp": { "Ref": "CidrIpVPC" } },
                     { "IpProtocol": "tcp", "FromPort": 9092, "ToPort": 9092, "CidrIp": { "Ref": "CidrIpVPC" } },
                     { "IpProtocol": "tcp", "FromPort": 2181, "ToPort": 2181, "CidrIp": { "Ref": "CidrIpVPC" } },
-                    { "IpProtocol": "tcp", "FromPort": 9092, "ToPort": 9092, "CidrIp": { "Ref": "CidrIpVPC" } }
+                    { "IpProtocol": "tcp", "FromPort": 0, "ToPort": 65535, "CidrIp": { "Ref": "CidrIpVPC" } },
+                    { "IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "CidrIp": "115.110.209.228/32" },
+                    { "IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "CidrIp": "27.50.5.103/32" }
                 ],
                 "VpcId": {
                     "Ref": "VpcId"

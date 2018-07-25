@@ -1,16 +1,16 @@
-serverVersion: 5.0.1
+serverVersion: amazon_ami
 cluster:
   - group: kafka
-    nodeCount: 1
-    nodeType: t2.xlarge
-    #nodeType: t2.micro
+    nodeCount: 3
+    #nodeType: t2.xlarge
+    nodeType: t2.small
     dataDiskSize: 8
     services:
       - kafka
   - group: zookeeper
-    nodeCount: 1
-    nodeType: t2.xlarge
-    #nodeType: t2.micro
+    nodeCount: 3
+    #nodeType: t2.xlarge
+    nodeType: t2.small
     dataDiskSize: 8
     services:
       - zookeeper
