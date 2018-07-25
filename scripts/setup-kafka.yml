@@ -169,7 +169,7 @@
      register: private_ips_zookeeper
 
 ## Collecting zookeeperIP and merger it with port
-   - shell: "echo {{private_ips_zookeeper.stdout_lines}}|tr -d '[ ]' | tr -d '\"'|tr -d '[:alpha:]' | tr ',' '\\n'|sed '/:[0-9]*$/ ! s/$/:{{zookeeper_port}}/' | tr '\\n' ', ' | sed 's|,|,|g' | sed 's/,\$//'"
+   - shell: "echo {{private_ips_zookeeper.stdout_lines}}|tr -d '[ ]' | tr -d '\"'|tr -d '[:alpha:]' | tr ',' '\\n'|sed '/:[0-9]*$/ ! s/$/:{{zookeeper_port}}/' | tr '\\n' ', ' | sed 's|,|,|g' | sed 's/,$//'"
      register: zookeeper_ip_combine
 
 ## Broekr_ID, collecting counting numbers of kafka nodes
