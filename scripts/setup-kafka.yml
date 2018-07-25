@@ -209,6 +209,8 @@
        - { regexp: 'log.dirs=', line: 'log.dirs={{ data_store }}' }
        - { regexp: 'zookeeper.connect=', line: 'zookeeper.connect={{ zookeeper_ip_combine.stdout }}' }
        - { regexp: 'broker.id=', line: 'broker.id={{ kafka_broker_id.stdout }}' }
+       - { regexp: 'listeners=', line: 'listeners=PLAINTEXT://0.0.0.0:{{ port }}' }
+       - { regexp: 'vertised.listeners=', line: 'vertised.listeners=PLAINTEXT://{{hostname.stdout}}:{{ port }}' }
 
 # Starting Kafka server in port 9091
    - name: Create Kafka server script to start in port {{ port }}

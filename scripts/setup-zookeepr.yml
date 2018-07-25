@@ -150,6 +150,14 @@
      with_items:
        - { regexp: 'clientPort=', line: 'clientPort={{ port }}' }
        - { regexp: 'dataDir=', line: 'dataDir={{ data_store }}' }
+       - { regexp: 'tickTime=', line: 'tickTime=2000' }
+       - { regexp: 'nitLimit=', line: 'initLimit=10' }
+       - { regexp: 'syncLimit=', line: 'syncLimit=5' }
+       - { regexp: 'maxClientCnxns=', line: 'maxClientCnxns=60' }
+       - { regexp: 'minSessionTimeout=', line: 'minSessionTimeout=4000' }
+       - { regexp: 'maxSessionTimeout=', line: 'maxSessionTimeout=40000' }
+       - { regexp: 'autopurge.snapRetainCount=', line: 'autopurge.snapRetainCount=3' }
+       - { regexp: 'autopurge.purgeInteval=', line: 'autopurge.purgeInteval=1' }
 
 ## updating log4j.properties
 
