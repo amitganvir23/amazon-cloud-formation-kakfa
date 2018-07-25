@@ -22,7 +22,20 @@
  2) $vim parameters/granular.yaml   (Update your nodeType, nodeCount and dataDiskSize)
  2) .$/deploy.sh [Your Stack Name]   (Specify your StackName, ex. ./deploy.sh glp-kafka-test)
  3) $ls -l generated.template    (Here it will genrate template file to upload in Cloud Formation)
-
+ 4) Please update below parameters while updating template
+      - Stack name: [Your Stack Name]
+      - CidrIpVPC: [CIDIR Value from the subnet]
+      - KeyName: [Select Key Pair]
+      - License: BYOL
+      - Subnets: [Select Subnet]
+      - VpcId: [Select VPC]
+    Example:
+      - Stack name: glp-kafka-test
+      - CidrIpVPC: 172.168.0.0/16
+      - KeyName: terraform-support-keys
+      - License: BYOL
+      - Subnets: subnet-da38e6a0
+      - VpcId: vpc-e860a6180
 
 
 
